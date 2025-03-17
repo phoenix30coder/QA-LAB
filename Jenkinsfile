@@ -1,38 +1,34 @@
 pipeline {
     agent any
+triggers {
+cron('H/30 * * * *') // Runs every 30 minutes
+}
+environment {
+CYPRESS_CACHE_FOLDER = "${WORKSPACE}/.cache/Cypress"
+}
+stages { // ✅ Missing "stages" block added
+stage('Checkout') {
+steps {
+checkout([$class: 'GitSCM',
+branches: [[name: '*/v1']], // Ensure correct branch
+userRemoteConfigs: [[url:
+'https://github.com/phoenix30coder/QA-LAB.git']]
+])
+}
+}
+stage('Install Dependencies') {
+steps {
+bat 'npm install'
+bat 'npx cypress install' // Ensure Cypress binary is
+installed
 
-    environment {
-        NODEJS_HOME = tool name: 'NodeJS', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
-        PATH = "${NODEJS_HOME}/bin:${env.PATH}"
-    }
-
-    stages {
-        stage('Checkout Code') {
-            steps {
-                git branch: 'v1', url: 'https://github.com/phoenix30coder/QA-LAB.git'
-            }
-        }
-
-        stage('Install Dependencies') {
-            steps {
-                sh 'npm install'
-            }
-        }
-
-        stage('Run Cypress Tests') {
-            steps {
-                sh 'npx cypress run --headless'
-            }
-        }
-
-        stage('Publish Report') {
-            steps {
-                publishHTML(target: [
-                    reportDir: 'cypress/reports',
-                    reportFiles: 'index.html',
-                    reportName: 'Cypress Test Report'
-                ])
-            }
-        }
-    }
+}
+}
+stage('Run Cypress Tests') { // ✅ Added a test execution stage
+steps {
+bat 'npx cypress run --reporter junit --reporter-options
+"mochaFile=results/results.xml,toConsole=true"'
+}
+}
+}
 }
