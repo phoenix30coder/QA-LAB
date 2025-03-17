@@ -1,8 +1,6 @@
 pipeline {
     agent any
-triggers {
-cron('H/30 * * * *') // Runs every 30 minutes
-}
+
 environment {
 CYPRESS_CACHE_FOLDER = "${WORKSPACE}/.cache/Cypress"
 }
