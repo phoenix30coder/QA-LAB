@@ -15,24 +15,16 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh 'npm install'
+                bat 'npm install'
             }
         }
 
         stage('Run Cypress Tests') {
             steps {
-                sh 'npx cypress run --headless'
+                bat 'npx cypress run --headless'
             }
         }
 
-        stage('Publish Report') {
-            steps {
-                publishHTML(target: [
-                    reportDir: 'cypress/reports',
-                    reportFiles: 'index.html',
-                    reportName: 'Cypress Test Report'
-                ])
-            }
-        }
+
     }
 }
