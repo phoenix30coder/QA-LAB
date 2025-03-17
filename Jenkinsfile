@@ -15,12 +15,7 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                bat '''
-    npm cache clean --force
-    rmdir /s /q node_modules
-    del /f /q package-lock.json
-    npm install
-'''
+                bat "npm install"
             }
         }
 
