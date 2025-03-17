@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                git 'https://github.com/phoenix30coder/QA-LAB.git'
+                 git branch: 'main', url: 'https://github.com/phoenix30coder/QA-LAB.git'
             }
         }
 
@@ -21,7 +21,7 @@ pipeline {
 
         stage('Run Cypress Tests') {
             steps {
-                sh 'npx cypress run --headless'
+                sh 'npx cypress run --browser chrome'
             }
         }
 
