@@ -24,6 +24,13 @@ pipeline {
                 bat 'npx cypress run --headless --browser chrome'
             }
         }
+        stage("Generate Report"){
+            steps{
+                bat "npx mochawesome-merge cypress/reports/*.json -o cypress/reports/report.json"
+                bat "npx marge cypress/reports/report.json -o cypress/reports --inline "
+                bat "start cypress/reports/cypress/reports/report.html"
+
+            }
 
 
     }
