@@ -24,8 +24,7 @@ installed
 }
 stage('Run Cypress Tests') { // ✅ Added a test execution stage
 steps {
-bat 'npx cypress run --reporter junit --reporter-options
-"mochaFile=results/results.xml,toConsole=true"'
+bat 'npx cypress run --reporter'
 }
 }
 }
