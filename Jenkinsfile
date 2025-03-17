@@ -9,30 +9,23 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                 git branch: 'main', url: 'https://github.com/phoenix30coder/QA-LAB.git'
+                 git branch: 'main', url: 'https://github.com/phoenix30coder/QA-LAB'
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                sh 'npm install'
+                bat 'npm install'
             }
         }
 
-        stage('Run Cypress Tests') {
+        stage('Run Cypress Tests and report generation') {
             steps {
-                sh 'npx cypress run --browser chrome'
+                bat 'npm run test'
             }
         }
 
-        stage('Publish Report') {
-            steps {
-                publishHTML(target: [
-                    reportDir: 'cypress/reports',
-                    reportFiles: 'index.html',
-                    reportName: 'Cypress Test Report'
-                ])
-            }
-        }
+
+
     }
 }
