@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                git 'https://github.com/phoenix30coder/QA-LAB.git'
+                git branch: 'v1', url: 'https://github.com/phoenix30coder/QA-LAB.git'
             }
         }
 
